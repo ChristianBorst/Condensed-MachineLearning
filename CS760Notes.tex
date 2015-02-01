@@ -85,43 +85,112 @@
 		\clearpage
 
 	\section{Probability and Bayesian Learning}
-		Recall Bayes theorem: $P(A|B) = P(B|A)P(A)/P(B)$ \\
-		\\
-		Brute-force MAP learning algorithm:
-		\begin{enumerate}[(i)]
-			\item Given information $D$, for each hypothesis $h \in H$, calculate the posterior probability $P(h|D) = P(D|h)P(h)/P(D)$
-			\item Output hypothesis $h_{MAP}$ with highest posterior probability $h_{MAP} = argmax_{h \in H} P(h|D)$
-			\end{enumerate}
-		Other probabalisitic methods in machine learning:
-		\begin{enumerate}[(i)]
-			\item Maximum likelihood and least-squared error hypotheses
-			\item Maximum likelihood hypotheses for predicting probabilities
-			\item Minimum description length principle
-			\item Bayes optimal classification: $argmax_{v_j \in V}\sum_{h_i \in H} P(v_j|h_i)P(h_i|D)$
-			\item Gibb's Algorithm: choose hypothesis $h \in H$ at random, according to posterior probaiblity distribution over $H$, and use $h$ to predict the classification of the next instance $x$ \\
-			\end{enumerate}
-		Bayesian networks and naive classification: \\
-		\\
-		If the data $D$ is noise free, and the target concept is contained in the hypothesis, every hypothesis consistent with the data \\
-		Other probabalistic hypotheses concepts:
-		\begin{enumerate}[(i)]
-			\item Maximumd likelihood and least-squared error hypotheses
-			\end{enumerate}
-		A Bayesian network consists of a directed acyclic graph and a set of conditional probability distributions \\
-		In the each Directed Acyclic Graph (DAG):
-		\begin{enumerate}[(i)]
-			\item Each node denotes a random variable
-			\item An edge from $X$ to $Y$ represents that $X$ directly influences $Y$
-			\item Each node $X$ contains a conditional probability distribution representing $P(X|Parents(X))$
-			\item Each variable $X$ is independent of its non-descendants given its parents
-			\item Each variable $X$ is independent of all others given its Markov blanket
-			\end{enumerate}
-		Advantages of Bayesian network representation:
-		\begin{enumerate}[(i)]
-			\item Captures indepdendence and conditional indpendence where they exist
-			\item Encodes the relevant  portion fo the full joint distribution
-			\item Graphical representation gives insight into complexity of inference
-			\end{enumerate}
+		\subsection{Probabilistic Machine Learning Concepts}
+			Recall Bayes theorem: $P(A|B) = P(B|A)P(A)/P(B)$ \\
+			\\
+			Brute-force MAP learning algorithm:
+			\begin{enumerate}[(i)]
+				\item Given information $D$, for each hypothesis $h \in H$, calculate the posterior probability $P(h|D) = P(D|h)P(h)/P(D)$
+				\item Output hypothesis $h_{MAP}$ with highest posterior probability $h_{MAP} = argmax_{h \in H} P(h|D)$
+				\end{enumerate}
+			Other probabalisitic concepts in machine learning:
+			\begin{enumerate}[(i)]
+				\item Maximum likelihood and least-squared error hypotheses
+				\item Maximum likelihood hypotheses for predicting probabilities
+				\item Minimum description length principle
+				\item Bayes optimal classification: $argmax_{v_j \in V}\sum_{h_i \in H} P(v_j|h_i)P(h_i|D)$
+				\item Gibb's Algorithm: choose hypothesis $h \in H$ at random, according to posterior probaiblity distribution over $H$, and use $h$ to predict the classification of the next instance $x$ 
+				\end{enumerate}
+		\subsection{Bayesian networks}
+			A Bayesian network consists of a directed acyclic graph and a set of conditional probability distributions \\
+			In the each Directed Acyclic Graph (DAG):
+			\begin{enumerate}[(i)]
+				\item Each node denotes a random variable
+				\item An edge from $X$ to $Y$ represents that $X$ directly influences $Y$
+				\item Each node $X$ contains a conditional probability distribution representing $P(X|Parents(X))$
+				\item Each variable $X$ is independent of its non-descendants given its parents
+				\item Each variable $X$ is independent of all others given its Markov blanket
+				\end{enumerate}
+			Advantages of Bayesian network representation:
+			\begin{enumerate}[(i)]
+				\item Captures indepdendence and conditional indpendence where they exist
+				\item Encodes the relevant  portion fo the full joint distribution
+				\item Graphical representation gives insight into complexity of inference
+				\end{enumerate}
+			Inference task: given values for some variables in the network (evidence) and set of query variables, compute posterior distribution over query variables \\
+			Hidden variables: neither evidence nor the query variables \\
+			Baysean networks allow for any set to be evidence and any set to be query \\
+			Inference by enumeration: consider the chain rule $P(x_1, ..., x_n) = P(x_1)P(x_2|x_1)P(x_3|x_2, x_1)...P(x_n|x_{n-1}, ..., x_1)$ \\
+			Posterior probability on query variables can be found via independence, chain rule, and marginalization \\
+			\\
+			Parameter learning task: given set of training instances and graph structure, infer parameter of conditional probability distributions \\
+			Strcture learning task: given set of training instances, infer graph structure (and possibly parameters of CPDs) \\
+			For parameter learning, use maximum a posteriori (MAP) estimation: e.g. m-estimates $P(X = x) = (n_x + p_xm)/(\sum_{v \in Values(X)} n_v) + m$, where $p_x$ is prior probability of value $x$, $m$ is number of virtual instances, and $n_v$ is number of occurences of value $v$ 
+		\subsection{Expectation Maximization}
+			Missing data (hidden variables, values missing at random): values can be imputed using Expectation Maximization (EM) \\
+			Iterate until convergence:
+			\begin{enumerate}[(i)]
+				\item Expectation step: using current model, compute expectation over missing values (missing temporarily take expected values)
+				\item Maximization step: update model parameters with those that maximize probability of data (MLE or MAP)
+				\end{enumerate}
+			Note that $k$-means unsupervised clustering is a form of expectation maximization \\
+			Expectation maximation can be hard (takes most likely value) or soft (expectation is probabiltiy distribution) \\
+			\\
+			Expectation maximation for parameter learning:
+			\begin{enumerate}[(i)]
+				\item Expecation step: compute probability of each completion of incomplete data points, i.e. answering query over missing variables given others
+				\item Maximization step: use completed data set to update Dirchlet distributions, except counts can be fractional, update conditional probability tables
+				\end{enumerate}
+			Subtelty for parameter learning: overcounting based on number of iterations required to converge to settings for missing values. After each expectation step, reset Dirichlet distributions before repeating maximization step \\
+			\\
+			Problems with expectation maximization: only finds local optimum, deterministic with respect to priors
+		\subsection{Learning Network Structure}
+			Chow-Liu algorithm: learns tree structure that maximizes likelihood of training data
+			\begin{enumerate}[(i)]
+				\item Compute weight $I(X_i, X_j)$ of each possible edge $(X_i, X_j)$
+				\item Find maximum-weight spanning tree: use mutual information to calculate \\
+				$I(X, Y) = \sum_{x \in values{X}}\sum_{y \in values{Y}} P(x, y)\log_2 P(x, y)/(P(X)P(Y))$ \\
+				Prim's algorithm (given $(V, E)$):
+				\begin{enumerate}[(a)]
+					\item $V_{new} = \{v\}$ where $v \in V$ (arbitrary)
+					\item $E_{new} = \{\}$
+					\item Repeat until $V_{new} = V$: choose edge $(u, v)$ in $E$ with max weight where $u$ is in $V_{new}$ and $v$ is not. Add $v$ to $V_{new}$ and $(u, v)$ to $E_{new}$
+					\item Return $(V_{new}, E_{new}$, a maximum spanning tree
+					\end{enumerate}
+				Kruskal's algorithm (given $(V, E)$):
+				\begin{enumerate}[(i)]
+					\item $E_{new} = \{\}$
+					\item For each $(u, v)$ in $E$ ordered by weight (high to low): \\
+					Pop $(u, v)$ from $E$ and add to $E_{new}$ if it does not create a cycle
+					\item Return $V$ and $E_{new}$, a maximum spanning tree
+					\end{enumerate}
+				\item Assign edge directions in maximimum-weight spanning tree \\
+				Pick a node for the root, assign edge direction
+				\end{enumerate}
+			Heuristic search for structure learning: each state in search space represents Bayes net structure \\
+			Search approach requires specification of
+			\begin{enumerate}
+				\item Scoring function: $score(G, D) = \sum_i score(X_i, Parents(X_i):D)$ \\
+				Thus, a network can be scored by summing terms over nodes, and changes can be efficently scored via a local search
+				\item State transition operators: adding an edge, deleting in edge, reversing an edge
+				\item Search algorithm: hill climbing or sparse candidate search
+				\end{enumerate}
+			Bayesian network hill climibing search: greedy algorithm \\
+			Bayesian network sparse candidate search (given data set $D$, initial network $B_0$, parameter $k$):
+			\begin{enumerate}[(i)]
+				\item Let $i = 0$
+				\item Repeat until convergence:
+				\begin{enumerate}[(a)]
+					\item Increment $i$
+					\item Restrict step: select for each variable $X_j$ a set $C_j^i(|C_k^i|)$ of candidate parents
+					\item Maximize step: find network $B_i$ maximizing score among networks where $\forall X_j, Parents(X_j) \subset C_j^i$
+					\end{enumerate}
+				\item Return $B_i$
+				\end{enumerate}
+			Restriction step in sparse candidate search: \\
+			First iteration: candidate parents computed using mutual information, $I(X, Y) = \sum_{x, y} P(x, y)\log{(P(x, y)/(P(x)P(y)))}$ 
+			
+
 		\clearpage
 
 	\section{Machine Learning Methdology}

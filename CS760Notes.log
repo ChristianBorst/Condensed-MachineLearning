@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.27)  23 JAN 2015 13:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.27)  31 JAN 2015 19:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -254,39 +254,144 @@ File: ann.png Graphic file (type png)
  <use ann.png>
 Package pdftex.def Info: ann.png used on input line 18.
 (pdftex.def)             Requested size: 209.58255pt x 259.88956pt.
- (./CS760Notes.toc)
+ (./CS760Notes.toc
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./ann.png>])
 \tf@toc=\write3
 \openout3 = `CS760Notes.toc'.
 
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 33--40
 
-[1
+ []
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./ann.png>] [2
+
+Overfull \hbox (25.61584pt too wide) in paragraph at lines 33--40
+\OT1/cmr/m/n/10 C4.5 uses gain ra-tio: $\OML/cmm/m/it/10 SplitInfo\OT1/cmr/m/n/
+10 (\OML/cmm/m/it/10 D; S\OT1/cmr/m/n/10 ) = \OMS/cmsy/m/n/10 ^^@ [][] j\OML/cm
+m/m/it/10 D[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 =\OMS/cmsy/m/n/10 j\OML/cmm/m/i
+t/10 D\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 log[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10
+ D[]=D\OT1/cmr/m/n/10 )$, and $\OML/cmm/m/it/10 GainRatio \OT1/cmr/m/n/10 = \OM
+L/cmm/m/it/10 I\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 D; S\OT1/cmr/m/n/10 )\OML/cmm/
+m/it/10 =SplitInfo\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 D; S\OT1/cmr/m/n/10 )$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--40
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--51
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--51
+
+ []
+
+[3
 
 ]
-(./CS760Notes.aux) ) 
+Underfull \hbox (badness 10000) in paragraph at lines 66--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--85
+
+ []
+
+[4
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 89--92
+
+ []
+
+
+Overfull \hbox (15.89136pt too wide) in paragraph at lines 120--129
+\OT1/cmr/m/n/10 Inference by enu-mer-a-tion: con-sider the chain rule $\OML/cmm
+/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]; :::; x[]\OT1/cmr/m/n/10 ) = \O
+ML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 )\OML/cmm/
+m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/1
+0 x[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\O
+MS/cmsy/m/n/10 j\OML/cmm/m/it/10 x[]; x[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 :::P
+\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 x[]; ::
+:; x[]\OT1/cmr/m/n/10 )$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--129
+
+ []
+
+[5
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 136--140
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 144--147
+
+ []
+
+[6] [7
+
+] [8
+
+] [9
+
+] [10
+
+] [11
+
+] [12
+
+] [13
+
+] [14
+
+] [15
+
+] [16
+
+] [17
+
+] (./CS760Notes.aux) ) 
 Here is how much of TeX's memory you used:
- 2963 strings out of 495028
- 41182 string characters out of 6181497
- 95968 words of memory out of 5000000
- 6126 multiletter control sequences out of 15000+600000
- 10888 words of font info for 43 fonts, out of 8000000 for 9000
+ 2966 strings out of 495028
+ 41218 string characters out of 6181497
+ 100968 words of memory out of 5000000
+ 6128 multiletter control sequences out of 15000+600000
+ 11503 words of font info for 45 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,6n,26p,236b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cme
-x10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy7.pfb>
-Output written on CS760Notes.pdf (2 pages, 175467 bytes).
+ 37i,6n,26p,294b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb>
+Output written on CS760Notes.pdf (17 pages, 239930 bytes).
 PDF statistics:
- 54 PDF objects out of 1000 (max. 8388607)
- 37 compressed objects within 1 object stream
+ 110 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
