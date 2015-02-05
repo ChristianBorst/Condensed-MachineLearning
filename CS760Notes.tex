@@ -33,7 +33,7 @@
 		Alternative metric: Gini coefficient, i.e. product of probabilities for each of (2) outcomes for the feature \\
 		\\
 		Limitation of information gain: biased toward tests with many outcomes (i.e. features with many possible values) \\
-		C4.5 uses gain ratio: $SplitInfo(D, S) = -\sum_{k \in S} |D_k|/|D| log_2(D_k/D)$, and $GainRatio = I(D, S)/SplitInfo(D, S)$ \\
+		C4.5 uses gain ratio: $SplitInfo(D, S) = -\sum_{k \in S} |D_k|/|D| \log_2(D_k/D)$, and $GainRatio = I(D, S)/SplitInfo(D, S)$ \\
 		\\
 		Overfitting: $h \in H$ overfits the training data $D$ if there is an alternative model $h' \in H$ such that $error(h) > error(h')$ yet $error_D(h) < error_D(h)$ \\
 		Avoiding overfitting in decision tree learning:
@@ -55,36 +55,51 @@
 		\clearpage
 
 	\section{Instance-Based Learning}
-		$k$-nearest neighbor classification: given an instance $x_q$ to classify, find $k$ training-set instances that are most simimlar or $x_q$ \\
-		Return the class value: $\hat{y} = argmax_{v \in values(Y)} \sum_{i = 1}^k \delta(v, y_i)$ \\
-		Various determinations of distance: 
-		\begin{enumerate}[(i)]
-			\item Hamming distance: number of features with differing values
-			\item Euclidean distance: $\delta(x_i, x_j) = \sqrt{\sum_f ({x_i}_f - {x_j}_f)^2}$
-			\item Manhattan distance: $\delta(x_i, x_j) = \sum_f ({x_i}_f - {x_j}_f)^2$
-			\end{enumerate}
-		$k$-nearest neighbor regression: given an instance $x_q$, find the $k$ nearest training-set instances and return $\sum_{i = 1}^k \delta(v, y_i)$ \\
-		Distance-weighted nearest neighbor: instances contribute to prediction according to their distance from $x_q$ \\
-		\\
-		$k$-nearest neighbor does almost nothing at training time, and offsets costs to classification/prediction time \\
-		Strategies to speed up $k$-nearest neighbor
-		\begin{enumerate}[(i)]
-			\item Don't retain every training instance: edited nearest neighbor \\
-			Select subset of instances that still provide accurate classifications: \\
-			\begin{enumerate}[(a)]
-				\item Incremental deletion: delete from memory all training instances redundant to classification
-				\item Incremental growth: if training instances insufficient to classify training instance, add to memory
+		\subsection{K-nearest Neighbor}
+			$k$-nearest neighbor classification: given an instance $x_q$ to classify, find $k$ training-set instances that are most simimlar or $x_q$ \\
+			Return the class value: $\hat{y} = argmax_{v \in values(Y)} \sum_{i = 1}^k \delta(v, y_i)$ \\
+			Various determinations of distance: 
+			\begin{enumerate}[(i)]
+				\item Hamming distance: number of features with differing values
+				\item Euclidean distance: $\delta(x_i, x_j) = \sqrt{\sum_f ({x_i}_f - {x_j}_f)^2}$
+				\item Manhattan distance: $\delta(x_i, x_j) = \sum_f ({x_i}_f - {x_j}_f)^2$
 				\end{enumerate}
-			\item Use data structure to look up nearest neighbors ($k$-$d$ tree)
-			\end{enumerate}
-		$k$-$d$ trees ($A^*$ instance search): each node stores one instance, and splits on the median value of the feature having the highest variance \\
-		Nodes are pushed to the $A^*$ priority queue with the value indicating the minimum possible distance to the query based on the threshold for the split \\
-		\\
-		Strenghts of instance based learning: simple, efficeint training, easily adapts to on-line nearning, rubust to noisy data, etc. \\
-		Limitations: sensitive to range of feature values, senstivie to irrelevant and correlated features, inefficient classification, no insight into problem domain (i.e. lacks modeling of problem)
+			$k$-nearest neighbor regression: given an instance $x_q$, find the $k$ nearest training-set instances and return $\sum_{i = 1}^k \delta(v, y_i)$ \\
+			Distance-weighted nearest neighbor: instances contribute to prediction according to their distance from $x_q$ \\
+			\\
+			$k$-nearest neighbor does almost nothing at training time, and offsets costs to classification/prediction time \\
+			Strategies to speed up $k$-nearest neighbor
+			\begin{enumerate}[(i)]
+				\item Don't retain every training instance: edited nearest neighbor \\
+				Select subset of instances that still provide accurate classifications: \\
+				\begin{enumerate}[(a)]
+					\item Incremental deletion: delete from memory all training instances redundant to classification
+					\item Incremental growth: if training instances insufficient to classify training instance, add to memory
+					\end{enumerate}
+				\item Use data structure to look up nearest neighbors ($k$-$d$ tree)
+				\end{enumerate}
+			$k$-$d$ trees ($A^*$ instance search): each node stores one instance, and splits on the median value of the feature having the highest variance \\
+			Nodes are pushed to the $A^*$ priority queue with the value indicating the minimum possible distance to the query based on the threshold for the split \\
+			\\
+			Strenghts of instance based learning: simple, efficeint training, easily adapts to on-line nearning, rubust to noisy data, etc. \\
+			Limitations: sensitive to range of feature values, senstivie to irrelevant and correlated features, inefficient classification, no insight into problem domain (i.e. lacks modeling of problem)
+		\subsection{Linear Locally Weighted Regression}
+			Locally weighted linear regression: $f(x) = w_0 + w_1a_1(x) +\:...\:+ w_na_n(x)$ \\
+			Local approximations to have query point fit local training examples:
+			\begin{enumerate}
+				\item Minimize squared error over just $k$ nearest neighbors: \\
+				$E_1(x_q) = (1/2)\sum_{x \in k\text{ nearest neighbors of }x_q} (f(x) - \hat{f}(x))^2$
+				\item Minimize squared error over entire set of $D$ of training examples, using decreasing function $K$: \\
+				$E_2(x_q) = (1/2)\sum_{x \in D} (f(x) - \hat{f}(x))^2 K(d(x_q, x))$
+				\item Combination of the previous: let $N$ be $k$ nearest neighbors of $x_q$
+				\begin{equation*}
+					\frac{1}{2}\sum_{x \in N} (f(x) - \hat{f}(x))^2 K(d(x_q, x))
+					\end{equation*}
+				\end{enumerate}
 		\clearpage
 
 	\section{Probability and Bayesian Learning}
+		Note: for more rigourous details, see Heckerman's Bayesian Network Learning Tutorial
 		\subsection{Probabilistic Machine Learning Concepts}
 			Recall Bayes theorem: $P(A|B) = P(B|A)P(A)/P(B)$ \\
 			\\
@@ -150,6 +165,7 @@
 				\item Compute weight $I(X_i, X_j)$ of each possible edge $(X_i, X_j)$
 				\item Find maximum-weight spanning tree: use mutual information to calculate \\
 				$I(X, Y) = \sum_{x \in values{X}}\sum_{y \in values{Y}} P(x, y)\log_2 P(x, y)/(P(X)P(Y))$ \\
+				\\
 				Prim's algorithm (given $(V, E)$):
 				\begin{enumerate}[(a)]
 					\item $V_{new} = \{v\}$ where $v \in V$ (arbitrary)
@@ -188,9 +204,46 @@
 				\item Return $B_i$
 				\end{enumerate}
 			Restriction step in sparse candidate search: \\
-			First iteration: candidate parents computed using mutual information, $I(X, Y) = \sum_{x, y} P(x, y)\log{(P(x, y)/(P(x)P(y)))}$ 
-			
-
+			Fpr the first iteration: candidate parents computed using mutual information \\
+			$I(X, Y) = \sum_{x, y} P(x, y)\log{(P(x, y)/(P(x)P(y)))}$ \\
+			Kullback-Liebler divergence: distance measure between two distributions $P$ and $Q$
+			\begin{equation*}
+				D_{KL} = (P(X)||Q(X)) = \sum\limits_x P(x)\log\frac{P(x)}{Q(x)}
+				\end{equation*}
+			KL-divergence assesses discrepancy between network's estimate $P_{net}(X, Y)$ and empirical estimate \\
+			$M(X, Y) = D_{KL}(P(X, Y)||P_{net}(X, Y))$ \\
+			\\
+			Algorithm for restriction step in sparse candidate (given data $D$, current network $B_i$, parameter $k$):
+			\begin{enumerate}[(i)]
+				\item For each variable $X_j$
+				\begin{enumerate}[(a)]
+					\item Calculate $M(X_j, X_i)$ for all $X_j \neq X_i$ such that $X_l \notin Parents(X_j)$
+					\item Choose highest ranking $X_l...X_{k - s}$ where $s = |Parents(X_j)|$
+					\item Include current parents in candidate set to ensure monotonic score improvements \\
+					$C_j^i = Parents(X_j) \cup X_l ... X_{k - s}$
+					\end{enumerate}
+				\item Return ${C_j^i}$ for all $X_j$
+				\end{enumerate}
+			Scoring function for structure learning: maxmize data probability, but penalize complexity \\
+			General approach: $argmax_{G, \theta_G} \log{P(D|G, \theta_G)} - f(n)|\theta_G|$ \\
+			Akaike information criterion (AIC) $f(n) = 1$, Bayesian Information Criterion (BIC) $f(n) = \log{(n)}/2$
+		\subsection{Naive Bayes and Tree Augmented Network}
+			Naive Bayes assumption: all features $X_i$ are conditionally independent given class $Y$ \\
+			$P(X_1, ..., X_n, Y) = P(Y)\Pi_{i = 1}^nP(X_i|Y)$ \\
+			Unaugmented tree starts with edge from node $Y$ to each feature $X_1, ..., X_n$
+			\\
+			Learning: estimate $P(Y = y)$ for each value of $Y$, estimate $P(X_i = x|Y = y)$ for each $X_i$ \\
+			Classification done using Bayes rule: 
+			\begin{equation*}
+				P(Y = y|X) = \frac{P(y)P(X|y)}{\sum\limits_{y' \in values(Y)}P(y')P(X|y')} = \frac{P(y)\prod\limits_{i = 1}^n P(x_i|y)}{\sum\limits_{y' = values(Y)}(P(y')\prod\limits_{i = 1}^n P(x_i|y'))}
+				\end{equation*}
+			Tree Augmented Network (TAN) algorithm: learns tree structure to augment edges of naive Bayes network
+			\begin{enumerate}[(i)]
+				\item Compute weight $I(X_i, X_j|Y)$ for each possible edge $(X_i, X_j)$ between features
+				\item Find maximum weight spanning tree (MST) for graph over $X_l ... X_n$
+				\item Assign edge direction in MST
+				\item Construct a TAN model by adding node for $Y$ and an edge for $Y$ to each $X_i$
+				\end{enumerate}
 		\clearpage
 
 	\section{Machine Learning Methdology}
