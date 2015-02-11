@@ -1,4 +1,6 @@
 \contentsline {section}{\numberline {1}Decision Tree Learning}{3}
+\contentsline {subsection}{\numberline {1.1}Information Gain}{3}
+\contentsline {subsection}{\numberline {1.2}Decision Tree Algorithms}{3}
 \contentsline {section}{\numberline {2}Instance-Based Learning}{4}
 \contentsline {subsection}{\numberline {2.1}K-nearest Neighbor}{4}
 \contentsline {subsection}{\numberline {2.2}Linear Locally Weighted Regression}{4}
@@ -9,13 +11,20 @@
 \contentsline {subsection}{\numberline {3.4}Learning Network Structure}{6}
 \contentsline {subsection}{\numberline {3.5}Naive Bayes and Tree Augmented Network}{8}
 \contentsline {section}{\numberline {4}Machine Learning Methdology}{9}
-\contentsline {section}{\numberline {5}Computational Learning Theory}{10}
-\contentsline {section}{\numberline {6}Ensemble Methods}{11}
-\contentsline {section}{\numberline {7}Neural Networks and Deep Learning}{12}
-\contentsline {section}{\numberline {8}Support Vector Machines}{13}
-\contentsline {section}{\numberline {9}Reinforcement Learning}{14}
-\contentsline {section}{\numberline {10}Rule Learning and Inductive Logic Programming}{15}
-\contentsline {section}{\numberline {11}Statistical Relational Learning}{16}
-\contentsline {section}{\numberline {12}Bias-Variance Tradeoff}{17}
-\contentsline {section}{\numberline {13}Real-Valued Prediciton Methods}{18}
-\contentsline {section}{\numberline {14}Dimensionality Reduction}{19}
+\contentsline {subsection}{\numberline {4.1}Partitioning of Data}{9}
+\contentsline {subsection}{\numberline {4.2}Performance Evaluation}{9}
+\contentsline {subsection}{\numberline {4.3}Confidence Intervals and Learning Tasks}{10}
+\contentsline {subsection}{\numberline {4.4}Comparing Learning Models and Hypotheses}{10}
+\contentsline {section}{\numberline {5}Computational Learning Theory}{12}
+\contentsline {subsection}{\numberline {5.1}PAC Learning}{12}
+\contentsline {subsection}{\numberline {5.2}Hypothesis spaces}{13}
+\contentsline {subsection}{\numberline {5.3}Mistake Bound}{13}
+\contentsline {section}{\numberline {6}Ensemble Methods}{15}
+\contentsline {section}{\numberline {7}Neural Networks and Deep Learning}{16}
+\contentsline {section}{\numberline {8}Support Vector Machines}{17}
+\contentsline {section}{\numberline {9}Reinforcement Learning}{18}
+\contentsline {section}{\numberline {10}Rule Learning and Inductive Logic Programming}{19}
+\contentsline {section}{\numberline {11}Statistical Relational Learning}{20}
+\contentsline {section}{\numberline {12}Bias-Variance Tradeoff}{21}
+\contentsline {section}{\numberline {13}Real-Valued Prediciton Methods}{22}
+\contentsline {section}{\numberline {14}Dimensionality Reduction}{23}

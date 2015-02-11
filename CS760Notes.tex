@@ -15,43 +15,44 @@
 	\maketitle
 	\vspace{10pt}
 	\begin{center}
-		\includegraphics[width = 2.9in]{ann.png}
+		\includegraphics[width = 2.9in]{svm.png}
 		\end{center}
 	\vspace{16pt}
 	\tableofcontents
 	\clearpage
 
 	\section{Decision Tree Learning}
-		Information gain is used to determine the (feature to) split \\
-		Information theory: entropy and information gain:
-		\begin{enumerate}[(i)]
-			\item Entropy $= H(X) = -\sum_{x \in X}P(X = x)\log_2 P(X = x)$
-			\item Conditional entropy $= H(Y|X) = -\sum_{x \in X}P(Y|X = x)$, where \\
-			$H(Y|X = x) = \sum_{y \ in Y}P(Y = y|X = x)\log_2 P(Y = y|X = x)$
-			\item Mutual information (information gain) $= I(X, Y) = H(Y) - H(Y|X)$
-			\end{enumerate}
-		Alternative metric: Gini coefficient, i.e. product of probabilities for each of (2) outcomes for the feature \\
-		\\
-		Limitation of information gain: biased toward tests with many outcomes (i.e. features with many possible values) \\
-		C4.5 uses gain ratio: $SplitInfo(D, S) = -\sum_{k \in S} |D_k|/|D| \log_2(D_k/D)$, and $GainRatio = I(D, S)/SplitInfo(D, S)$ \\
-		\\
-		Overfitting: $h \in H$ overfits the training data $D$ if there is an alternative model $h' \in H$ such that $error(h) > error(h')$ yet $error_D(h) < error_D(h)$ \\
-		Avoiding overfitting in decision tree learning:
-		\begin{enumerate}[(i)]
-			\item Early stopping: stop if further splitting not justified by statistical test
-			\item Post-pruning: grow large tree, then prune nodes using tuning set \\
-			Iteratively eliminate nodes until further reductions reduce accuracy
-			\end{enumerate}
-		Lookahead: instead of evaluating using information gain, look ahead to see what splits at the next level would be, and measure information gain at a deeper level \\
-		\\
-		Continuous features: use threshold-based boolean attribute, treshold determined by sorting examples according to the featurem and generating candidate thresholds between adjacent examples with different class values \\
-		Threshold chosen from candidates based on information gain \\
-		\\
-		Training examples with missing attribute values: possible strategies
-		\begin{enumerate}[(i)]
-			\item At node $n$, upon encountering a missing feature value, assign it the value most common among examples at node $n$, or most common among examples at the node $n$ that also have the same class value
-			\item Assign fractional value to attribute for the example and pass fractional example to children for purposes of evaluating information gain
-			\end{enumerate}
+		\subsection{Information Gain}
+			Information gain is used to determine the (feature to) split \\
+			Information theory: entropy and information gain:
+			\begin{enumerate}[(i)]
+				\item Entropy $= H(X) = -\sum_{x \in X}P(X = x)\log_2 P(X = x)$
+				\item Conditional entropy $= H(Y|X) = -\sum_{x \in X}P(Y|X = x)$, where \\
+				$H(Y|X = x) = \sum_{y \ in Y}P(Y = y|X = x)\log_2 P(Y = y|X = x)$
+				\item Mutual information (information gain) $= I(X, Y) = H(Y) - H(Y|X)$
+				\end{enumerate}
+			Alternative metric: Gini coefficient, i.e. product of probabilities for each of (2) outcomes for the feature \\
+			\\
+			Limitation of information gain: biased toward tests with many outcomes (i.e. features with many possible values) \\
+			C4.5 uses gain ratio: $SplitInfo(D, S) = -\sum_{k \in S} |D_k|/|D| \log_2(D_k/D)$, and $GainRatio = I(D, S)/SplitInfo(D, S)$
+		\subsection{Decision Tree Algorithms}
+			Overfitting: $h \in H$ overfits the training data $D$ if there is an alternative model $h' \in H$ such that $error(h) > error(h')$ yet $error_D(h) < error_D(h)$ \\
+			Avoiding overfitting in decision tree learning:
+			\begin{enumerate}[(i)]
+				\item Early stopping: stop if further splitting not justified by statistical test
+				\item Post-pruning: grow large tree, then prune nodes using tuning set \\
+				Iteratively eliminate nodes until further reductions reduce accuracy
+				\end{enumerate}
+			Lookahead: instead of evaluating using information gain, look ahead to see what splits at the next level would be, and measure information gain at a deeper level \\
+			\\
+			Continuous features: use threshold-based boolean attribute, treshold determined by sorting examples according to the featurem and generating candidate thresholds between adjacent examples with different class values \\
+			Threshold chosen from candidates based on information gain \\
+			\\
+			Training examples with missing attribute values: possible strategies
+			\begin{enumerate}[(i)]
+				\item At node $n$, upon encountering a missing feature value, assign it the value most common among examples at node $n$, or most common among examples at the node $n$ that also have the same class value
+				\item Assign fractional value to attribute for the example and pass fractional example to children for purposes of evaluating information gain
+				\end{enumerate}
 		\clearpage
 
 	\section{Instance-Based Learning}
@@ -247,9 +248,215 @@
 		\clearpage
 
 	\section{Machine Learning Methdology}
+		\subsection{Partitioning of Data}
+			Evaluation of learning models: given instance set $X$ and probability distribution $D$ defining the probaiblity of encountering an $x \in X$, learner must learn target concept (function) $f \in H$ \\
+			Evaluation methdology seeks to answer two questions: what is the best accuracy for a hypothesis $h$, learned from $n$ instances, applied to future instances drawn according to $D$, and what is the probably error in this accuracy estimate \\
+			\\
+			Distinction between sample error and true error:
+			\begin{enumerate}[(i)]
+				\item Sample error: error of $h$ with respect ot target function $f$ and data sample $S$ \\	
+				$error_S(h) = (1/n)\sum_{x \in S} \delta(f(x), h(x))$, where $\delta(a, b) = 1$ if $a \neq b$, 0 otherwise
+				\item True error: $error_D(h) = Pr_{x \in D} [f(x) \neq h(x)]$
+				\end{enumerate}
+			Limitations of singular training/test partitions: 
+			\begin{enumerate}[(i)]
+				\item Not enough data for sufficiently large training and test sets 
+				\item Single training set does not show how sensitive accuracy is to particular training sample
+				\end{enumerate}
+			Random resampling: repeatedly partitioning data into training and test sets \\
+			Stratified sampling: statify instances by class and select (i.e. maintain class proportions) \\
+			Cross validation: partition data into $n$ subsamples. Iteratively test on one subset, train on rest \\
+			Leave-one-out cross validation: $n$ is the number of instances 
+		\subsection{Performance Evaluation}
+			Receiver Operating Characteristic (ROC) curve: true positive-rate vs false positive-rate as threshold as confidence of an instance being positive is varied \\
+			Algorithm for creating an ROC curve: 
+			\begin{enumerate}[(i)]
+				\item Sort test-set prediction according to confidence that each instance is positive
+				\item Step through sorted list from high to low confidence
+				\begin{enumerate}[(a)]
+					\item Locate threshold between instances with opposite classes
+					\item Compute TPR, FPR for instances above threshold
+					\item Output (FPR, TPR) coordinate
+					\end{enumerate}
+				\end{enumerate}
+			Points plotted on ROC curve can be interpolated to form convex hull \\
+			Having a high TPR or low FPR does not indicate accuracy in unbalanced data sets \\
+			\\
+			Alternative accuracy metric: recall and precision
+			\begin{enumerate}[(i)]
+			 	\item Recall (TP rate) = TP/(actual positives) = TP/(TP + FN)
+			 	\item Precision = TP/(predicted positives) = TP/(TP + FP)
+				\end{enumerate}
+			Precision/recall curve: plots prevision vs. recall as threshold as confidence of an instance being positive is varied \\
+			\\
+			Single ROC/PR curve with cross-validation: multiple approaches
+			\begin{enumerate}[(i)]
+				\item Assume confidence values comparable across folds \\
+				Pool predicitons from all test sets and plot curve from pooled predictions
+				\item Plot individual curves for all test sets, viewing each as function \\
+				Plot average curve for set of functions 
+				\end{enumerate}
+			ROC and PR curves allow predictive performance to be assessed at various levels of confidence, assume binary classification, and can be summarized by the integral \\
+			ROC curves: insensitive to class distribution changes, can identify optimal classification thresholds for tasks with differential misclassification costs \\
+			PR curves: show fraction of predictions that are false positives, suited for tasks with many negative instances
+		\subsection{Confidence Intervals and Learning Tasks}
+			Avoiding pitfalls: questions when applying learning tasks
+			\begin{enumerate}[(i)]
+				\item Held-aside test data should be representative of collecting new data
+				\item Folds of cross validation should only use training data for the fold \\
+				At no point in preprocessing should test case labels be accessed
+				\item Repeated modificiations of learning algorithm or preprocessing could lead to overfitting
+				\end{enumerate}
+			Confidence intervals on error: suppose we have learned model $h$, test set $S$ containing $n$ instances drawn independently of each other and independent of $h$, with $n \geq 30$, and $h$ makes $r$ errors over the $n$ instances \\
+			Estimate of error is $error_S(h) = r/n$ \\
+			With approximately $N$ probability, the true error is in the interval
+			\begin{equation*}
+				error_S(h) \pm z_N \sqrt{\frac{error_S(h)(1 - error_S(h))}{n}}
+				\end{equation*}
+			where $z_N$ is a constant that depends on $N$, e.g. $z_{0.95} = 1.96$ \\
+			Confidence interval follows from normal approximation of binomial distribution \\
+			An $N\%$ confidence interval on parameter $p$ is an interal that is expected with $N\%$ probability to contain $p$ \\
+			In using confidence intervals, consider (central limit theorem) that a large number independent, identically distribution random variables approximately follows a normal distribution \\
+			\\
+			Difference in error of two hypotheses: $\hat{d} = error_S(h_1) - error_S(h_2)$ \\
+			$N\%$ confidence interval for $d$ is:
+			\begin{equation*}
+			 	\hat{d} \pm z_N \sqrt{\frac{error_{S_1}(h_1)(1 - error_{S_1}(h_1))}{n_1} + \frac{error_{S_2}(h_2)(1 - error_{S_2}(h_2))}{n_2}}
+				\end{equation*}
+		\subsection{Comparing Learning Models and Hypotheses}
+			Consider $\delta$s as observed values of a set of independent, identically distributed variables \\
+			Null hypothesis: the 2 learning systems have the same accuracy \\
+			Alternative hypothesis: one system is more accurate than the other \\
+			Hypothesis test:
+			\begin{enumerate}[(i)]
+				\item Use paired $t$-test to determine probability $p$ that mean of $\delta$s would arise from null hypothesis
+				\item If $p$ is sufficiently small (usually $p < 0.05$), reject null hypothesis
+				\end{enumerate}
+			Comparing systems using a paired $t$-test: 
+			\begin{enumerate}[(i)]
+				\item Calculate sample mean: $\bar{\delta} = (1/n)\sum_{i = 1}^n \delta_i$
+				\item Calculate $t$ statistic:
+				\begin{equation*}
+					t = \frac{\bar{\delta}}{\sqrt{\frac{1}{n(n - 1)}\sum\limits_{i = 1}^n (\delta_i - \bar{\delta})^2}}
+					\end{equation*}
+				\item Determine corresponding $p$-value: use $t$ in table for $t$-distribution with $n - l$ degrees of freedom
+				\end{enumerate}
+			$t$-tests compare two learning systems, tests like McNemar's $\chi^2$ test compares two learned models \\
+			\\
+			Scatter plots for pairwise method comparison: can compare thwo methods $A$ and $B$ by plotting $(A performance, B performance)$ across numerous data sets \\
+			Lesion studies: determine relevant contributions to learning system performance by removing (lesioning) components
 		\clearpage
 
 	\section{Computational Learning Theory}
+		\subsection{PAC Learning}
+			Computational learning theory concerns itself with: 
+			\begin{enumerate}[(i)]
+				\item Sample complexity: how many training examples needed to converge on hypothesis
+				\item Computational complexity: how much computational effort needed for learner to converge
+				\item Mistake bound: how many misclassifications before learner converges on hypothesis
+				\end{enumerate}
+			Learning setting composed of:
+			\begin{enumerate}[(i)]
+				\item Set of instances $X$
+				\item Set of hypotheses $H$
+				\item Set of possible target concepts $C$
+				\item Unknown probability distribution $D$ over instances
+				\end{enumerate}
+			Learner is given set $D$ of training instances $(x, c(x))$ for some target concept $c \in C$ \\
+			Learning task is to output hypothesis $h$ modeling $c$ \\
+			\\
+			True error of hypothesis: how often $h$ is wrong on future instances drawn from $D$: \\
+			$error_D(h) = P_{x \in D}(c(x) \neq h(x))$ \\
+			Traning error: how often $h$ is wrong on instances in training set $d$ \\
+			$error_D(h) = P(x \in D)(c(x) \neq h(x)) = (1/|D|)\sum_{x \in D}\delta(c(x) \neq h(x))$ \\
+			\\
+			Probably Approximately Correct (PAC) Learning: consider class $C$ of possible target concepts defined over set of instances $X$ of size $n$, and a learner $L$ using hypothesis space $H$ \\
+			$C$ is PAC learnable by $L$ if for all: $c \in C$, distributions $D$ over $C$, $\varepsilon$ and $\delta$ such that $0 < \varepsilon, \delta < 0.5$ \\
+			$L$ will, with probability $> (1 - \delta)$, output hypothesis $h \in H$ such that $error_D(h) \leq \varepsilon$, in time polynomial to $1/\varepsilon, 1/\delta, n, size(c)$ \\
+			Suppose hypotheses consistent with $m$ training instances \\
+			PAC learnability determined by whether
+			\begin{enumerate}[(i)]
+				\item $m$ grows polynomially in the relevant parameters
+				\item Processing time per training exmaple is polynomial
+				\end{enumerate}
+			Consistency with respect to training example set $D = \{(x_1, c(x_1), ..., (x_m, c(x_m)))\}$, and hypothesis $h$
+			\begin{equation*}
+				consistent(h, D) = \forall((x, c(x)) \in D) h(x) = c(x)
+				\end{equation*}
+			Version space: $VS_{H, D} = \{h \in H | consistent(h, D)\}$ \\
+			Version space $VS_{H, D}$ is $\varepsilon$-exhausted with repsect to concept $c$ and data set $D$ if: \\
+			$(\forall h \in VS_{H, D}) error_D(h) < \varepsilon$ \\
+			\\
+			The probability that $VS_{HD}$ is not $\varepsilon$-exhausted is no greater than $|H|e^{-\varepsilon m}$ \\
+			Proof: probability that some hypothesis with error greater than $\varepsilon$ is consistent with $m$ training instance is $(1 - \varepsilon)^m$, there are at most $|H|$ such hypotheses, and since $(1 - \varepsilon) \geq e^{-\varepsilon}$ when $0 \leq \varepsilon \leq 1$, the bound is $|H|e^{-\varepsilon m}$ \\
+			\\
+			The probability must be reduced below $\delta$: $|H|e^{-\varepsilon m} \geq \delta$ \\
+			Solving for $m$ yields the number of examples needed for PAC learnability:
+			\begin{equation*}
+				m \geq \frac{1}{\varepsilon}\left(\ln{|H|} + \ln{\frac{1}{\delta}}\right)
+				\end{equation*}
+		\subsection{Hypothesis spaces}
+			Agnostic learning setting: don't assume $c \in H$, learner returns hypothesis $h$ that makes fewest errors in training \\
+			For error on training set to be less than $error_D(h) + \varepsilon$, $m$ examples needed, where
+			\begin{equation*}
+				m \geq \frac{1}{2\varepsilon^2}\left(\ln{|H|} + \ln{\frac{1}{\delta}}\right)
+				\end{equation*}
+			If $H$ is infinite, for measure of hypothesis space complexity, use in place of $|H|$ the largest subset of $X$ for which $H$ can guarantee zero training error regardless of target function \\
+			\\
+			A set of instances $D$ is shattered by a hypothesis space $H$ if and only if for every dichotomy of $D$, there is a hypothesis in $H$ consistent with the dichotomy \\
+			The VC dimension of $H$ defined over instance space $X$ is the size of the largest finite subset of $X$ shattered by $H$ \\
+			The VS dimension for finite $H$: $VC-dim(H) \leq \log_2|H|$ \\
+			Proof: suppose $VC-dim(H) = d$, and for $d$ instances, there are $2^d$ different possible labelings. $H$ must represent $2^d$ hypotheses, so $2^d \leq |H|$, thus $d \leq \log_2|H|$ \\
+			Using $VC-dim(H)$ as a measure of complexity of $H$, the bound can be defined as
+			\begin{equation*}
+				m \geq \frac{1}{\varepsilon}\left(4\log_2\frac{2}{\delta} + 8VC-dim(H)\log_2\frac{13}{\varepsilon}\right)
+				\end{equation*}
+			Lower bound on sample complexity: given target concept $C$
+			\begin{equation*}
+				m < max\left[\frac{1}{\varepsilon}\log{|\frac{1}{\delta}|},  \frac{VC-dim(C) - 1}{32\varepsilon}\right]
+				\end{equation*}
+		\subsection{Mistake Bound}
+			Learning setting (i.e. on-line learning setting): for $t = 1, 2, ...$
+			\begin{enumerate}[(i)]
+				\item Learner receives instance $x_t$
+				\item Learner predicts $h(x_t)$
+				\item Learner receives label $c(x_t)$ and updates model $h$
+				\end{enumerate}
+			Mistake bound model addresses how many mistakes will be made before the target concept is learned \\
+			\\
+			Mistake bound model analysis of halving algorithm \\
+			Halving algorithm is as follows:
+			\begin{enumerate}[(i)]
+				\item $VS_1 = H$
+				\item For $t = 1$ to $T$:
+				\begin{enumerate}[(a)]
+					\item Given training instance $(x_t, c(x_t))$, $h'(x_t) = MajorityVote(VS_t, x_t)$
+					\item Eliminate all wrong $h$ from version space (at least half) \\
+					$VS_{t + 1} = \{h \in VS_t | h(x_t) = c(x_t)\}$
+					\end{enumerate}
+				\item Return $VS_{t + 1}$
+				\end{enumerate}
+			Maximum number of mistakes is $M_{Halving}(C) = \lfloor log_2|H|\rfloor$ \\
+			\\
+			Optimal mistake bounds: suppose $C$ is an arbitrary nonempty concept class \\
+			An optimatal mistake bound is defined as $Opt(C) = min_{A \in \text{Learning Algorithms}} M_A(C)$ \\
+			$Opt(C)$ is the number of mistakes made on the hardest target concept and hardest training sequence by best algorithm \\
+			Optimal mistake bound is $VC-dim(C) \leq Opt(C) \leq M_{Halving}(C) \leq log_2(|C|)$ \\
+			\\
+			Mistake bound model analysis of weighted majority algorithm \\
+			Weighted majority algorithm is as follows: given predictors $A = \{a_1, ..., a_n\}$, learning rate $0 \leq \beta < 1$
+			\begin{enumerate}[(i)]
+				\item For all $i$, initialize $w_i = 1$
+				\item For each training instance $(x, c(x))$:
+				\begin{enumerate}[(a)]
+					\item Initialize $q_0$ and $q_0$ to 0
+					\item For each predictor $a_i$: $q_{a_i(x)} = q_{a_i(x)} + w_i$
+					\item If $q_1 > q_0$ then $h(x) = 1$, else if $q_0 > q_1$ then $h(x) = 0$, else $h(x) = random(0, 1)$
+					\item For each predictor $a_i$: if $a_i(x) \neq c(x)$ then $w_i = \beta w_i$
+					\end{enumerate}
+				\end{enumerate}
+			Weighted majority similar to perceptron (linear separator, robust against noise, mutliplicative weight updates) \\
+			If $k$ is minimum number of mistakes made by the best predictor in $A$ on training set $D$, then maximum number of mistakes for $\beta = 1/2$ is $2.4(k + log_2 n)$
 		\clearpage
 
 	\section{Ensemble Methods}
